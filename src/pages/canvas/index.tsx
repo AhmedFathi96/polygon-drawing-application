@@ -13,17 +13,19 @@ const  Canvas:React.FC<ICanvasProps> = (props:ICanvasProps) => {
         yCoordinate:0
     })
 
-    const [initPoint, setInitPoint] = useState(true)     
+    
+
+    const [initPoint, setInitPoint] = useState(true) 
+    const [scale, setScale] = useState(1)    
     useEffect(() => {
 
         if (canvasReference.current) {
             const context = canvasReference.current.getContext('2d');
+
             if (context) {
-                context.scale(2, 2);
-                // context.clearRect(0, 0, context.width, context.height);
+        
                 if(coordinates.xCoordinate !== 0 && coordinates.yCoordinate !==0){
                     if(props.getNextPoint.xCoordinate >= (props.getInitPoint.xCoordinate -4) &&  props.getNextPoint.xCoordinate <= (props.getInitPoint.xCoordinate + 4) && props.getNextPoint.yCoordinate >= (props.getInitPoint.yCoordinate -4) &&  props.getNextPoint.yCoordinate <= (props.getInitPoint.yCoordinate + 4)){
-                        // context.scale(2, 2)
                         props.onSetInitialPoints({xCoordinate:coordinates.xCoordinate,
                             yCoordinate:coordinates.yCoordinate})
                         props.onSetNextPoints({xCoordinate:coordinates.xCoordinate,
@@ -86,6 +88,14 @@ const  Canvas:React.FC<ICanvasProps> = (props:ICanvasProps) => {
         
     }
       
+    const zoomIn = () =>{
+        const scaleMultiplier = 0.8;
+        setScale( prev=> prev /= scaleMultiplier)
+    }
+    const zoomOut = () =>{
+        const scaleMultiplier = 0.8;
+        setScale( prev=> prev *=  scaleMultiplier)
+    }
      
      return (
         <div className={styles.default.canvasWrapper}>
@@ -93,9 +103,13 @@ const  Canvas:React.FC<ICanvasProps> = (props:ICanvasProps) => {
             <canvas
              onClick={(e)=>{getCoordinates(e)}}
              ref={canvasReference} 
-             width="1600" height="800"
+             width={500*scale} height={500*scale}
              className={styles.default.canvas}
             />
+            <div className={styles.default.buttonWrapper}>
+                <input type="button" id="plus" value="+" onClick={()=>{zoomIn()}} />
+                <input type="button" id="minus" value="-" onClick={()=>{zoomOut()}} />
+            </div>
         </div>
 
      );

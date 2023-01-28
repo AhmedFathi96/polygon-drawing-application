@@ -3,9 +3,19 @@
     border: 1px solid red;
 }
 
-// .canvasWrapper{
-//     // width: 100%;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-// }
+.canvasWrapper{
+    // width: 100%;
+    display: flex;
+}
+.buttonWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+.buttonWrapper input{
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+}
